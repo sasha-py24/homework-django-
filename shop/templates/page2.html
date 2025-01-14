@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+
+<h2 style="color:pink">About magazine</h2>
+<list>
+        <h1 style="color:blue">Online Shop</h1>
+        <br>
+        <li>Опис онлайн магазину:</li>
+                <p>Наш онлайн магазин спеціалізується на продажу стильного одягу,
+                аксесуарів та товарів для дому. Швидке доставлення,
+                зручні способи оплати та бездоганний сервіс - наші пріоритети.</p>
+
+        <li>Коротка інформація про нас:</li>
+                <p>Ми - команда професіоналів, яка прагне забезпечити найкращий
+                   досвід покупки для наших клієнтів. Ми постійно оновлюємо асортимент,
+                   щоб відповідати найвищим стандартам моди та домашнього комфорту.</p>
+
+</list>
+
+<h1>New Arrivals</h1>
+<table border="1px">
+  <tr>
+    <th>Pants</th>
+    <th>Coat</th>
+    <th>Pillow</th>
+  </tr>
+  <tr>
+    <td>10$</td>
+    <td>20$</td>
+    <td>45$</td>
+  </tr>
+  <tr>
+    <td>pink</td>
+    <td>green</td>
+    <td>red</td>
+  </tr>
+</table>
+
+<h1>Best Sellers</h1>
+<table border="1px">
+  <tr>
+    <th>pajamas</th>
+  </tr>
+  <tr>
+    <td>56$</td>
+  </tr>
+  <tr>
+    <td>cotton 100%</td>
+  </tr>
+</table>
+
+        <button><a href="{% url 'index' %}">home</a></button>
+        <button><a href="{% url 'page3' %}">Page 3</a></button>
+
+{% endblock %}
