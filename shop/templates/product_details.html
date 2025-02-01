@@ -1,0 +1,14 @@
+{% extends 'base/base.html' %}
+
+{% block content %}
+<p>Hello world</p>
+
+<h3>{{ prod.name }} {{ prod.price }}$</h3>
+
+
+        <button><a href="{% url 'index' %}">home</a></button>
+        <button><a href="{% url 'product' %}">Page 3</a></button>
+        <button><a href="{% url 'article' %}">article</a></button>
+
+
+{% endblock %}

@@ -1,8 +1,17 @@
-{% extends 'base.html' %}
+{% extends 'base/base.html' %}
 
 {% block content %}
 <p>Hello world</p>
+
+{% for product in products %}
+<h3>{{ product.name }} {{ product.price }}<a href="{% url 'product_details' product.id %}">go</a></h3>
+{% endfor %}
+
+
         <button><a href="{% url 'page2' %}">Page 2</a></button>
-        <button><a href="{% url 'page3' %}">Page 3</a></button>
+        <button><a href="{% url 'product' %}">Page 3</a></button>
+        <button><a href="{% url 'article' %}">article</a></button>
+        <button><a href="{% url 'categories' %}">categories</a></button>
+
 
 {% endblock %}
