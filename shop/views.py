@@ -3,9 +3,16 @@ from django.http import HttpResponse
 
 from .models import Product, Article, Categories
 from .forms import ProductCreationForm, CategoriesCreationForm
+from django.views.generic.list import ListView
 
 
 import datetime
+
+
+class IndexView(ListView):
+    template_name = 'index.html'
+    model = Product
+    context_object_name = 'products'  # == {'products': products}
 
 
 def index(request):

@@ -1,17 +1,9 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login
+
 from .models import User
 from .forms import UserRegistrationForm, UserLoginForm
 
-
-# def sign_in(request):
-#     # if request.method == 'POST':
-#     #     username = request.POST['username']
-#     #     password = request.POST['password']
-#     #     email = request.POST['email']
-#     #     user = User(username=username, password=password, email=email)
-#     #     user.save()
-#     return render(request, 'user.html', {'title': 'sign_in'})
 
 def sign_in(request):
     form_u = UserRegistrationForm()
@@ -36,3 +28,14 @@ def log_in(request):
             login(request, form_u.user_cache)
             return redirect('index')
     return render(request, 'login.html', {'form_u': form_u})
+
+
+
+# def sign_in(request):
+#     # if request.method == 'POST':
+#     #     username = request.POST['username']
+#     #     password = request.POST['password']
+#     #     email = request.POST['email']
+#     #     user = User(username=username, password=password, email=email)
+#     #     user.save()
+#     return render(request, 'user.html', {'title': 'sign_in'})
