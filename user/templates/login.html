@@ -3,17 +3,17 @@
 
 <form method="post">
          {% csrf_token %}
-{{ form_u.errors }}
-    {{ form_u.non_field_errors }}
+{{ form.errors }}
+    {{ form.non_field_errors }}
 
-{{ form_u.username }}
-    {% for error in form_u.username.errors %}
+{{ form.username }}
+    {% for error in form.username.errors %}
         <p>{{ error }}</p>
     {% endfor %}
 
 
-{{ form_u.password }}
-    {% for error in form_u.password.errors %}
+{{ form.password }}
+    {% for error in form.password.errors %}
         <p>{{ error }}</p>
     {% endfor %}
         <input type="submit" value="Enter">

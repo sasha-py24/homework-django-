@@ -1,14 +1,21 @@
 {% extends 'base/base.html' %}
 
 {% block content %}
-<p>Hello world</p>
 
 <h3>{{ prod.name }} {{ prod.price }}$</h3>
+{% csrf_token %}
+<form method="post"  action="{% url 'product_delete' prod.id %}?redirect=true">
+        {% csrf_token %}
+
+        <input type="submit" value="Delete">
+</form>
+
 
 
         <button><a href="{% url 'index' %}">home</a></button>
-        <button><a href="{% url 'product' %}">Page 3</a></button>
+        <button><a href="{% url 'product' %}">product</a></button>
         <button><a href="{% url 'article' %}">article</a></button>
+        <button><a href="{% url 'product_update' prod.id %}">product_update</a></button>
 
 
 {% endblock %}

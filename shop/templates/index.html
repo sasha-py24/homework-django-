@@ -1,17 +1,26 @@
 {% extends 'base/base.html' %}
-
+{% load static %}
 {% block content %}
-<p>Hello world</p>
+<p>products</p>
 
-{% for product in products %}
-<h3>{{ product.name }} {{ product.price }}<a href="{% url 'product_details' product.id %}">go</a></h3>
+        {% for product in products %}
+<div>
+        <h3>{{ product.name }} {{ product.price }}<a href="{% url 'product_details' product.id %}">look at</a></h3>
+        <button data-url = "{% url 'product_delete' product.id %}?redirect=true" class="product_delete">Delete</button>
+</div>
 {% endfor %}
-
 
         <button><a href="{% url 'page2' %}">Page 2</a></button>
         <button><a href="{% url 'product' %}">Page 3</a></button>
         <button><a href="{% url 'article' %}">article</a></button>
         <button><a href="{% url 'categories' %}">categories</a></button>
 
+
+
+{% endblock %}
+
+{% block js %}
+
+<script src="{% static 'js/project_delete.js' %}"></script>
 
 {% endblock %}

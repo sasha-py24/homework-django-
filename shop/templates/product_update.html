@@ -1,0 +1,32 @@
+{% extends 'base/base.html' %}
+
+{% block content %}
+
+<form method="post">
+         {% csrf_token %}
+
+{{ form.name }}
+    {% for error in form.name.errors %}
+        <p>{{ error }}</p>
+    {% endfor %}
+
+{{ form.price }}
+    {% for error in form.price.errors %}
+        <p>{{ error }}</p>
+    {% endfor %}
+
+
+{{ form.description }}
+    {% for error in form.description.errors %}
+        <p>{{ error }}</p>
+    {% endfor %}
+        <input type="submit" value="Enter">
+</form>
+
+
+        <button><a href="{% url 'index' %}">home</a></button>
+        <button><a href="{% url 'product' %}">Page 3</a></button>
+        <button><a href="{% url 'article' %}">article</a></button>
+
+
+{% endblock %}
