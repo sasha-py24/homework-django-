@@ -1,15 +1,18 @@
-{% extends 'base/base.html' %}
+{% extends 'base_admin.html' %}
 {% load static %}
+
+
 {% block content %}
 
-<p>products</p>
-
-
-
+    {% for model in models %}
+        <h1><a href="{% url 'model_list' model %}">{{ model }}</a></h1>
+    {% endfor %}
 
 {% endblock %}
 
 
 {% block js %}
+
+
 
 {% endblock %}

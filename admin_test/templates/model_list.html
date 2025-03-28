@@ -1,0 +1,67 @@
+{% extends 'base_admin.html' %}
+{% load static %}
+
+
+{% block content %}
+
+{% for item in data %}
+<div>
+    <p>{{ item.name }}</p>
+    <button class="product_delete" data-url="{% url 'model_delete' model item.id %}">Delete</button>
+</div>
+
+
+{% endfor %}
+
+
+<div>
+    {% if page_obj.has_previous %}
+        <a href="?page=1">First</a>
+        <a href="?page={{ page_obj.previous_page_number }}">Previous</a>
+    {% endif %}
+
+    Page {{ page_obj.number }} of {{ paginator.num_pages }}
+
+    {% if page_obj.has_next %}
+        <a href="?page={{ page_obj.next_page_number }}">Next</a>
+        <a href="?page={{ paginator.num_pages }}">Last</a>
+    {% endif %}
+</div>
+
+
+<button data-bs-toggle="modal" data-bs-target="#itemCreationModal">OPEN FORM</button>
+
+<div class="modal fade" id="itemCreationModal" tabindex="-1" aria-labelledby="itemCreationModal" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="itemCreationModalLabel">Modal title</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+          <form action="{% url 'model_create' model %}" id="itemCreationForm">
+              {{ form }}
+              <input type="submit">
+          </form>
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock %}
+
+
+
+
+
+{% block js %}
+
+<script src="{% static 'js/create_form.js' %}"></script>
+
+
+{% endblock %}
