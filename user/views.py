@@ -1,13 +1,15 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login
-
+from django.template.loader import render_to_string
+from django.views.generic.base import TemplateView
 
 from django.views.generic.edit import CreateView
 from django.contrib.auth.views import LoginView
+from django.http import JsonResponse, HttpResponseRedirect
 
 
-from .models import User
-from .forms import UserRegistrationForm, UserLoginForm
+from .models import User, TemporaryUser
+from .forms import UserRegistrationForm, UserLoginForm, TempUserForm
 
 
 class UserCreationView(CreateView):
@@ -22,6 +24,34 @@ class LoginPageView(LoginView):
     form_class = UserLoginForm
     redirect_authenticated_user = True
     success_url = '/'
+
+
+class TempUserView(CreateView):
+    template_name = 'temp_user.html'
+    model = TemporaryUser
+    form_class = TempUserForm
+
+    def render_to_response(self, context, **response_kwargs):
+        html = render_to_string(self.template_name, context, request=self.request)
+        return JsonResponse({'html': html})
+
+
+    def form_valid(self, form):
+        form.save()
+        self.request.session()
+        return JsonResponse({})
+
+
+
+
+
+class ProfileView(TemplateView):
+    template_name = "profile.html"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['user'] = self.request.user
+        return context
 
 
 # def log_in(request):

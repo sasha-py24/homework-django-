@@ -1,0 +1,38 @@
+<form hx-get="{% url 'product_list' sub_category.id %}" hx-trigger="product_list" hx-target="outerHtml">
+    {{ filter.form.as_p }}
+    <input type="hidden" value="true" name="is_filter">
+
+    <input type="text" name="search"
+           hx-get="{% url 'product_list' sub_category.id %}"
+           hx-trigger="change delay:500ms"
+           hx-include="closest form"
+           hx-target="#productsList"
+           hx-swap="outerHtml"
+    >
+    <input type="submit">
+</form>
+
+
+
+{% block products %}
+    <div id="productList">
+        {% for prod in products %}
+                <h3>{{ prod.name }}</h3>
+        {% endfor %}
+
+
+    <div hx-boost="true">
+        {% if page_obj.has_previous %}
+            <a href="{% url 'product_list' sub_category.id %}?page=1" hx-target="#productList" hx-swap="outerHTML">First</a>
+            <a href="{% url 'product_list' sub_category.id %}?page={{ page_obj.previous_page_number }}" hx-target="#productList" hx-swap="outerHTML">Previous</a>
+        {% endif %}
+
+        Page {{ page_obj.number }} of {{ paginator.num_pages }}
+
+        {% if page_obj.has_next %}
+            <a href="{% url 'product_list' sub_category.id %}?page={{ page_obj.next_page_number }}" hx-target="#productList" hx-swap="outerHTML">Next</a>
+            <a href="{% url 'product_list' sub_category.id %}?page={{ paginator.num_pages }}" hx-target="#productList" hx-swap="outerHTML">Last</a>
+        {% endif %}
+    </div>
+    </div>
+{% endblock %}

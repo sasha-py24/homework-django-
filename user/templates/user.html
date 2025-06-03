@@ -5,6 +5,7 @@
 <form method="post">
          {% csrf_token %}
 
+
 {{ form.username }}
     {% for error in form.username.errors %}
         <p>{{ error }}</p>

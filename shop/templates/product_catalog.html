@@ -1,0 +1,16 @@
+{% extends 'base/base.html' %}
+{% load cache %}
+{% block content %}
+
+{% csrf_token %}
+
+{% cache 60 prod %}
+        <div hx-get="{% url 'product_list' sub_category.id %}" hx-trigger="load" hx-target="this">
+
+        </div>
+
+{% endcache %}
+        <button><a href="{% url 'index' %}">home</a></button>
+        <button><a href="{% url 'product' %}">product</a></button>
+        <button><a href="{% url 'article' %}">article</a></button>
+{% endblock %}

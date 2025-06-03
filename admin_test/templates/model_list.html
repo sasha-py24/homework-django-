@@ -4,14 +4,16 @@
 
 {% block content %}
 
-{% for item in data %}
-<div>
-    <p>{{ item.name }}</p>
-    <button class="product_delete" data-url="{% url 'model_delete' model item.id %}">Delete</button>
+<div id="items">
+    {% for item in data %}
+<div id="item_id">
+         <p>{{ item.name }}</p>
+            <button class="product_delete" data-url="{% url 'model_delete' model item.id %}">Delete</button>
+            <button class="item-update" data-url="{% url 'model_update' model item.id %}" data-bs-toggle="modal" data-bs-target="#itemUpdateModal">Update</button>
+</div>
+    {% endfor %}
 </div>
 
-
-{% endfor %}
 
 
 <div>
@@ -41,6 +43,7 @@
       <div class="modal-body">
           <form action="{% url 'model_create' model %}" id="itemCreationForm">
               {{ form }}
+              {% csrf_token %}
               <input type="submit">
           </form>
 
@@ -53,6 +56,23 @@
   </div>
 </div>
 
+
+<div class="modal fade" id="itemUpdateModal" tabindex="-1" aria-labelledby="itemUpdateModal" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="itemUpdateModalLabel">Modal title</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body" id="itemUpdateModalBody">
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>
 {% endblock %}
 
 
@@ -62,6 +82,7 @@
 {% block js %}
 
 <script src="{% static 'js/create_form.js' %}"></script>
+<script src="{% static 'js/update_form.js' %}"></script>
 
 
 {% endblock %}

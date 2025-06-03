@@ -7,5 +7,6 @@ urlpatterns = [
     path('<model_name>/', views.ModelListView.as_view(), name='model_list'),
     path('<model_name>/<int:mod_id>/delete/', views.ModelDeleteView.as_view(), name='model_delete'),
     path('<model_name>/create/', views.ItemCreateView.as_view(), name='model_create'),
+    path('<model_name>/<int:mod_id>/update/', views.ItemUpdateView.as_view(), name='model_update'),
 
 ]

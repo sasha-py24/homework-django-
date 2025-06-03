@@ -1,7 +1,7 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 
-from .models import User
+from .models import User, TemporaryUser
 
 
 class UserRegistrationForm(UserCreationForm):
@@ -20,3 +20,11 @@ class UserLoginForm(AuthenticationForm):
     pass
 
 
+class TempUserForm(forms.ModelForm):
+    class Meta:
+        model = TemporaryUser
+        fields = ['email', 'first_name', 'last_name']
+
+
+    def save(self, commit=True):
+        temp_user = TemporaryUser.objects.filter

@@ -1,14 +1,26 @@
 {% extends 'base/base.html' %}
 {% load static %}
-{% block content %}
-<p>products</p>
+{% load cache %}
 
-        {% for product in products %}
-<div>
-        <h3>{{ product.name }} {{ product.price }}<a href="{% url 'product_details' product.id %}">look at</a></h3>
-        <button data-url = "{% url 'product_delete' product.id %}?redirect=true" class="product_delete">Delete</button>
+{% block content %}
+    <h1>Main page</h1>
+
+    <button hx-get="{% url 'htmx-test' %}" hx-trigger="click" hx-target="#target">Click</button>
+
+<div id="target">
+
 </div>
-{% endfor %}
+
+{% cache 60 categories %}
+    {% for category in categories %}
+            <div>
+                <h3>{{ category.name }}</h3>
+                {% for sub_category in category.sub_categories.all %}
+                   <button><a href="{% url 'product_catalog' sub_category.id %}">{{ sub_category.name }}</a></button>
+                {% endfor %}
+            </div>
+    {% endfor %}
+{% endcache %}
 
         <button><a href="{% url 'page2' %}">Page 2</a></button>
         <button><a href="{% url 'product' %}">Page 3</a></button>
@@ -16,12 +28,10 @@
         <button><a href="{% url 'categories' %}">categories</a></button>
         <button><a href="{% url 'index_admin' %}">index_admin</a></button>
 
-
-
 {% endblock %}
 
 {% block js %}
-
-<script src="{% static 'js/project_delete.js' %}"></script>
-
+    <script src="{% static 'js/project_delete.js' %}"></script>
 {% endblock %}
+html' %}
+

@@ -1,11 +1,13 @@
 from django import forms
-from .models import Product, Categories
+from .models import Product, Categories, Order, ReviewModal
 
 
 # class ProductCreationForm(forms.Form):
 #     name = forms.CharField()
 #     description = forms.CharField()
 #     price = forms.DecimalField()
+
+
 
 
 
@@ -38,3 +40,29 @@ class CategoriesCreationForm(forms.ModelForm):
         if amount < 0 or amount > 25:
             raise forms.ValidationError('amount must be between 0 and 25')
         return amount
+
+
+
+class OrderForm(forms.ModelForm):
+    class Meta:
+        model = Order
+        fields = ['user', 'temp_user', 'products', 'price']
+
+    def __init__(self, *args, **kwargs):
+        kwargs['user']
+
+
+class ProductFilterForm(forms.ModelForm):
+    start_price = forms.DecimalField(max_digits=5, decimal_places=2)
+    end_price = forms.DecimalField(max_digits=5, decimal_places=2)
+    class Meta:
+        model = Product
+        fields = []
+    def clean(self):
+        pass
+
+
+class ReviewForm(forms.ModelForm):
+    class Meta:
+        model = ReviewModal
+        fields = ['text']

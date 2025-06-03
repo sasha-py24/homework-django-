@@ -1,0 +1,33 @@
+
+<form action="{{ request.path }}" id="itemUpdateForm">
+      {% csrf_token %}
+      {{ form }}
+      <input type="submit">
+</form>
+
+<script>
+$('#itemUpdateForm').submit(function(event){
+    event.preventDefault();
+
+    let form = $(this);
+    let data = {};
+    $.each($(form).serializeArray(), function(index, field){
+        data[field.name] = field.value;
+        });
+    $.ajax(form.attr('action'), {
+      'type': 'POST',
+      'async': true,
+      'dataType': 'json',
+      'data': data,
+      'success': function(response){
+
+        const myModal = new bootstrap.Modal(document.getElementById('itemUpdateForm'))
+        myModal.hide();
+
+
+        document.getElementById('item${response.id}').outerHTML += response.html;
+
+      }
+    })
+});
+</script>
