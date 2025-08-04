@@ -2,6 +2,7 @@ from django.db import models
 from shop.managers.products import ProductManager
 from core.models import TimeStampedMixin
 from shop.choices import ColorChoices, MaterialChoices
+from decimal import Decimal
 
 
 class Product(TimeStampedMixin):
@@ -9,6 +10,7 @@ class Product(TimeStampedMixin):
     sub_category = models.ForeignKey('shop.SubCategories', related_name='products', on_delete=models.SET_NULL, null=True, blank=True)
     contactor = models.ForeignKey('shop.Contactor', related_name='products', on_delete=models.SET_NULL, null=True, blank=True)
 
+    gurantee = models.DecimalField(max_digits=5, decimal_places=2, default=Decimal('3'))
     name = models.CharField(max_length=100)
     description = models.TextField()
     price = models.DecimalField(max_digits=5, decimal_places=2)

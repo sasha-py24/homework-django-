@@ -1,4 +1,4 @@
-from shop.models import Product
+from shop.models import Product, Order
 
 from django import forms
 

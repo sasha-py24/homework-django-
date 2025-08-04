@@ -9,7 +9,13 @@
 
         <input type="submit" value="Delete">
 </form>
- <button type="button" id="makeOrder" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#OrderModal">
+ <button type="button" id="makeOrder" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#OrderModal"
+           hx-get="{% url 'product_details' prod.id %}"
+           hx-trigger="keyup delay:500ms"
+           hx-include="closest form"
+           hx-target="#OrderModal"
+           hx-swap="outerHtml"
+ >
       Buy
     </button>
 
@@ -34,10 +40,19 @@
 
 
 
+<div hx-get="{% url 'reviews_list' prod.id %}" hx-trigger="load" hx-target="this">
+
+
+
+</div>
+
+<div hx-get="{% url 'review_form' prod.id %}" hx-trigger="load" hx-target="this">
+
+
+</div>
         <button><a href="{% url 'index' %}">home</a></button>
         <button><a href="{% url 'product' %}">product</a></button>
         <button><a href="{% url 'article' %}">article</a></button>
         <button><a href="{% url 'product_update' prod.id %}">product_update</a></button>
-
 
 {% endblock %}

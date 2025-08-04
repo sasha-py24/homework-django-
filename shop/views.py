@@ -1,24 +1,29 @@
 from django.shortcuts import render, redirect
 
 from .models import Product, Article, Categories, Contactor, SubCategories, Order, ReviewModal
-from .forms import ProductCreationForm, CategoriesCreationForm, OrderForm
+from .forms import ProductCreationForm, CategoriesCreationForm, OrderForm, ReviewForm
 from .choices import ColorChoices, MaterialChoices
 from .filters import ProductFilter
+from .models import User, TemporaryUser
+from .mixins import CustomCart
 
 
-from django.views.generic.base import TemplateView
+from django.views.generic.base import TemplateView, View
 from django.views.generic.list import ListView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.views.generic.detail import DetailView
+from django.core.mail import send_mail
 
-
-from django.http import JsonResponse, HttpResponseRedirect
+from django.http import JsonResponse, HttpResponseRedirect, HttpResponse
 
 import datetime
 from django.views.decorators.cache import cache_page
 from django_filters.views import FilterView
 
 from render_block import render_block_to_string, render_block
+
+
+# send_mail('Theme', 'Text', "your_mail@gmail.com", ['sakuzpol@gmail.com'])
 
 
 class IndexView(ListView):
@@ -52,19 +57,73 @@ class ProductCreationView(CreateView):
     success_url = '/'
 
 
+class CartUpdateView(View):
+    def get(self, request, *args, **kwargs):
+        product_id = self.kwargs['product_id']
+        if self.request.session.get('cart') is None:
+            self.request.session['cart'] = {}
+        if product_id in self.request.session['cart']:
+            self.request.session['cart'][product_id] += 1
+        else:
+            self.request.session['cart'][product_id] = 1
+        return HttpResponse(status=204)
+
+
+class CartDeleteView(View):
+    def get(self, request, *args, **kwargs):
+        product_id = self.kwargs['product_id']
+        if self.request.session.get('cart') is None:
+            return
+        if product_id in self.request.session.get('cart').get(product_id) is None:
+            return
+        del self.request.session.get('cart')[product_id]
+        return HttpResponse(status=200)
+
+class CartUpdateDetailView(TemplateView):
+    def get(self, request, *args, **kwargs ):
+        if 
+
+
+
+class CartDetailView(TemplateView):
+    template_name = 'cart.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        if self.request.session.get('cart') is None:
+            return context
+        products = []
+        cart = self.request.session['cart']
+        prods = Product.objects.filter(id__in=cart.keys())
+        total = 0
+        for prod in prods:
+            total += prod.price * cart[prod.id]
+            products.append([prod, cart[prod.id]])
+        context['products'] = products
+        context['total'] = total
+        return context
+
+
 class OrderView(CreateView):
     form_class = OrderForm
 
     def get_form_class(self):
+        kwargs = super().get_form_kwargs()
         product = Product.objects.get(pk=self.kwargs['product_id'])
         kwargs = {
             'product': product
         }
         if self.request.user.is_authenticated:
             kwargs['user'] = self.request.user
+
         else:
-            pass
+            kwargs['temp_user'] = TemporaryUser.objects.get(id=self.request.session['temp_user'])
         return kwargs
+
+
+
+
+
 
 
 class ProductDeleteView(DeleteView):
@@ -102,6 +161,23 @@ class ProductDetailsView(DetailView):
     model = Product
     slug_url_kwarg = 'pk'
     context_object_name = 'prod'
+
+
+class ProductReviewListView(ListView):
+    template_name = 'reviews_list.html'
+    model = ReviewModal
+    form_class = ReviewForm
+    context_object_name = 'reviews'
+
+    def get_queryset(self):
+        return ReviewModal.objects.filter(product__id=self.kwargs['prod_id'])
+
+
+class ProductReviewCreateView(CreateView):
+    template_name = 'review_form.html'
+    model = ReviewModal
+    form_class = ReviewForm
+
 
 
 class ProductUpdateView(UpdateView):

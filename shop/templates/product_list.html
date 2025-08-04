@@ -4,9 +4,9 @@
 
     <input type="text" name="search"
            hx-get="{% url 'product_list' sub_category.id %}"
-           hx-trigger="change delay:500ms"
+           hx-trigger="keyup delay:500ms"
            hx-include="closest form"
-           hx-target="#productsList"
+           hx-target="#productList"
            hx-swap="outerHtml"
     >
     <input type="submit">
@@ -17,7 +17,9 @@
     <div id="productList">
         {% for prod in products %}
                 <h3>{{ prod.name }}</h3>
+                <a href="{% url 'product_details' prod.id %}">product_details</a>
         {% endfor %}
+
 
 
     <div hx-boost="true">

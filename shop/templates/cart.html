@@ -1,0 +1,17 @@
+{% extends 'base/base.html' %}
+
+{% block content %}
+    {% for product in products %}
+<div>
+        <button hx-get="{% url 'delete_from_cart' %}"
+                hx-target="closest div"
+                hx-swap="delete"
+        ></button>
+        <h3>{{ product.0.name }}</h3>
+        <p>Amount: {{ product.1 }}</p>
+</div>
+
+    {% endfor %}
+
+    <h2>Total: {{ total }}</h2>
+{% endblock %}

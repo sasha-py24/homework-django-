@@ -35,12 +35,10 @@ class TempUserView(CreateView):
         html = render_to_string(self.template_name, context, request=self.request)
         return JsonResponse({'html': html})
 
-
     def form_valid(self, form):
-        form.save()
-        self.request.session()
+        temp_user = form.save()
+        self.request.session['temp_user'] = temp_user.id
         return JsonResponse({})
-
 
 
 

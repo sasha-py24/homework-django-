@@ -1,0 +1,7 @@
+<form method="post" action="{{ request.path }}">
+    {% csrf_token %}
+    {{ form }}
+    <input type="submit">
+</form>
+
+

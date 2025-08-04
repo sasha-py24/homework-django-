@@ -9,3 +9,5 @@ class ReviewModal(models.Model):
 
     text = models.TextField()
 
+
+

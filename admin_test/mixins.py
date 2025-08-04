@@ -8,3 +8,7 @@ class CustomAdminURLModelMixin:
             if model.__name__ == model_name:
                 return model.objects.all()
         raise ValueError('Unknown model')
+
+
+
+

@@ -15,5 +15,9 @@ urlpatterns = [
     path('product/<int:pk>/catalog', views.CatalogView.as_view(), name='product_catalog'),
     path('product/<int:subcategory_id>/catalog/products/', views.ProductListView.as_view(), name='product_list'),
     path('test/', views.HTMXTestView.as_view(), name='htmx-test'),
+    path('product/<int:prod_id>/reviews/', views.ProductReviewListView.as_view(), name='reviews_list'),
+    path('product/<int:prod_id>/reviews/form/', views.ProductReviewCreateView.as_view(), name='review_form'),
+    path('product/<int:prod_id>/add_to_cart/', views.ProductReviewCreateView.as_view(), name='add_to_cart'),
+    path('product/<int:prod_id>/delete_from_cart/', views.ProductReviewCreateView.as_view(), name='delete_from_cart'),
 
 ]

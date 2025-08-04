@@ -1,7 +1,6 @@
 from django import forms
 from .models import Product, Categories, Order, ReviewModal
 
-
 # class ProductCreationForm(forms.Form):
 #     name = forms.CharField()
 #     description = forms.CharField()
@@ -49,7 +48,18 @@ class OrderForm(forms.ModelForm):
         fields = ['user', 'temp_user', 'products', 'price']
 
     def __init__(self, *args, **kwargs):
-        kwargs['user']
+        self.instance.user = kwargs.pop('user', None)
+        self.instance.temp_user = kwargs.pop('temp_user', None)
+        self.product = kwargs.pop('product')
+        super().__init__(*args, **kwargs)
+        self.instance.temp_user = self.temp_user
+        self.instance.user = self.user
+        self.instance.product = self.product
+
+    def save(self, commit=True):
+        instance = super().save(commit)
+
+        return instance
 
 
 class ProductFilterForm(forms.ModelForm):

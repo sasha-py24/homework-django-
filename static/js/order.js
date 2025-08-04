@@ -5,7 +5,7 @@ if (! $('#orderModalBody').html()){
           'async': true,
           'dataType': 'json',
           'success': function(response){
-                $('#orderModalBody').html(response)
+                $('#orderModalBody').html(response.html)
 
 
            },
